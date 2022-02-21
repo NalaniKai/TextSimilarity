@@ -1,2 +1,5 @@
 #don't track python environment
 data515/
+__pycache__/
+textsimilarity/__pycache__/
+textsimilarity.egg-info
