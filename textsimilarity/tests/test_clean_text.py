@@ -36,15 +36,15 @@ class TestCleanText(unittest.TestCase):
     def test__calculate_jaccard_distance_difference(self): 
         """Jaccard distance should be greater for less similar words"""       
         jaccard_dist_less = self.text_cleaner._calculate_jaccard_distance(
-            self.incorrect_birthday, self.correct_birthday)
+                            self.incorrect_birthday, self.correct_birthday)
         jaccard_dist_more = self.text_cleaner._calculate_jaccard_distance(
-            self.correct_forest, self.correct_birthday)
+                            self.correct_forest, self.correct_birthday)
         self.assertGreater(jaccard_dist_more, jaccard_dist_less)
 
     def test__calculate_jaccard_distance_match(self):   
         """Jaccard distance should be 0.0 for the same word."""
         jaccard_dist_match = self.text_cleaner._calculate_jaccard_distance(
-            self.correct_birthday, self.correct_birthday)
+                            self.correct_birthday, self.correct_birthday)
         self.assertEqual(jaccard_dist_match, 0.0)
 
     def test_spelling_correction_all(self):
@@ -52,9 +52,13 @@ class TestCleanText(unittest.TestCase):
         Spelling corrections should be made for text
         with multiple misspelled words.
         """
-        misspelled_words = self.incorrect_birthday + ' ' + self.incorrect_forest
-        corrected_words = self.text_cleaner.spelling_correction(misspelled_words)
-        self.assertEqual(corrected_words, self.correct_birthday + ' ' + self.correct_forest)
+        misspelled_words = self.incorrect_birthday + \
+                            ' ' + \
+                            self.incorrect_forest
+        corrected_words = self.text_cleaner.spelling_correction(
+                            misspelled_words)
+        self.assertEqual(corrected_words, 
+            self.correct_birthday + ' ' + self.correct_forest)
 
     def test_spelling_correction_none(self):
         """
@@ -62,7 +66,8 @@ class TestCleanText(unittest.TestCase):
         correctly spelled words.
         """
         correct_words = self.correct_birthday + ' ' + self.correct_forest
-        corrected_words = self.text_cleaner.spelling_correction(correct_words)
+        corrected_words = self.text_cleaner.spelling_correction(
+                                            correct_words)
         self.assertEqual(corrected_words, correct_words)
     
     def test_determine_text_profanity_false(self):
@@ -71,12 +76,13 @@ class TestCleanText(unittest.TestCase):
         not be marked as profane.
         """
         is_profanity = self.text_cleaner.determine_text_profanity(
-            self.correct_birthday)
+                                        self.correct_birthday)
         self.assertFalse(is_profanity)
 
     def test_determine_text_profanity_true(self):
         """Text that contains profanity should be marked profane."""
-        is_profanity = self.text_cleaner.determine_text_profanity('go to hell')
+        is_profanity = self.text_cleaner.determine_text_profanity(
+                                        'go to hell')
         self.assertTrue(is_profanity)
 
 if __name__ == '__main__':
