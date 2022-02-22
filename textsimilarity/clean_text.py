@@ -17,7 +17,7 @@ class CleanText():
     correcting spelling errors.
     """
 
-    def __init__(self, ngram_chars):
+    def __init__(self, ngram_chars=2):
         """
         Load required English vocabularies for spelling correction
         and checking for profanity.
@@ -39,7 +39,8 @@ class CleanText():
         return False
 
     def spelling_correction(self, text):
-        """Correct spelling.
+        """
+        Correct spelling of words in given phrase.
         Return the text string with corrections for misspelled words.
         """
         words = text.split()
