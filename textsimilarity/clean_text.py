@@ -64,5 +64,3 @@ class CleanText():
         w0_ngrams = set(ngrams(w0, self.ngram_chars))
         w1_ngrams = set(ngrams(w1, self.ngram_chars))
         return jaccard_distance(w0_ngrams, w1_ngrams)
-
-
