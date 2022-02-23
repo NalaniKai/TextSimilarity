@@ -16,8 +16,10 @@ install:
   - pip install coverage
   - pip install -r requirements.txt
 
+#run unittests
 script:
   - coverage run -m unittest discover 
 
+#generate report
 after_success:
   - coverage report
