@@ -49,6 +49,3 @@ class TestBertModel(unittest.TestCase):
         """Embeddings should be of expected size."""
         emb = self.bert_model._get_embedding(self.test_out_walk)
         self.assertEqual(emb.shape[c.FIRST_IDX], c.EMB_SIZE)
-
-if __name__ == '__main__':
-    unittest.main()

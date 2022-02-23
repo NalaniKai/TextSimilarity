@@ -84,6 +84,3 @@ class TestCleanText(unittest.TestCase):
         is_profanity = self.text_cleaner.determine_text_profanity(
                                         'go to hell')
         self.assertTrue(is_profanity)
-
-if __name__ == '__main__':
-    unittest.main()

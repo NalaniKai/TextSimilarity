@@ -1,1 +1,23 @@
+#build language for configuration 
 language: python
+
+#python versions to try
+python:
+  - 3.9
+  - 3.8
+
+#only evaluate the main branch
+branches:
+  only:
+    - main
+
+#set up environment
+install:
+  - pip install coverage
+  - pip install -r requirements.txt
+
+script:
+  - coverage run -m unittest discover 
+
+after_success:
+  - coverage report

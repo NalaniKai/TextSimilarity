@@ -97,6 +97,3 @@ class TestRankers(unittest.TestCase):
             ranked[c.FIRST_IDX][c.SECOND_IDX], 
             ranked[-1][c.SECOND_IDX]
             )
-
-if __name__ == '__main__':
-    unittest.main()
