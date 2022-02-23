@@ -8,6 +8,7 @@ from nltk.util import ngrams
 from nltk.corpus import words
 from nltk.metrics.distance import jaccard_distance
 import spacy
+import spacy.cli
 from profanity_filter import ProfanityFilter
 from textsimilarity import constants as c
 
@@ -25,6 +26,7 @@ class CleanText():
         nltk.download('words', quiet=True)
         self.english_words = words.words()
         self.ngram_chars = ngram_chars
+        spacy.cli.download('en_core_web_lg')
         self.spacy_english = spacy.load('en_core_web_lg', quiet=True)
         pf = ProfanityFilter(nlps={'en': self.spacy_english})
         self.spacy_english.add_pipe(pf.spacy_component, last=True)
