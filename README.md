@@ -9,5 +9,8 @@ This package provides functionality to clean text using the clean_text module, l
 ## Installation
 You can install the textsimilarity package using pip.
 ```
-pip install textsimilarity
+pip install git+https://github.com/NalaniKai/TextSimilarity
 ```
+
+## Usage
+Please refer to the [examples](https://github.com/NalaniKai/TextSimilarity/tree/main/examples) folder to see how to use this package.
