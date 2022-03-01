@@ -3,8 +3,8 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
+import numpy as np
 from textsimilarity import constants as c
-import torch.nn.functional as F
 
 class CosineSimilarityRanker():
     """
@@ -14,6 +14,9 @@ class CosineSimilarityRanker():
 
     def __init__(self, model, comparison_corpus):
         """
+        model: language model
+        comparison_corpus: list of strings for ranking
+
         Create dictionary of text phrases for comparison with
         the corresponding embeddings using the given model. 
         """
@@ -33,12 +36,14 @@ class CosineSimilarityRanker():
 
     def _calculate_cosine_similarity(self, emb0, emb1):
         """Calculate and return cosine similarity."""
-        return F.cosine_similarity(emb0, emb1, dim=0).item()
+        numerator = np.dot(emb0, emb1)
+        denominator = np.linalg.norm(emb0)*np.linalg.norm(emb1)
+        return numerator / denominator
 
     def rank_on_similarity(self, target_text):
         """
         Returns ordered text phrases based on cosine similarity to 
-        a given target text.
+        a given target text string.
         """
         target_emb = self.model._get_embedding(target_text)
         cosine_sim_tracker = []
