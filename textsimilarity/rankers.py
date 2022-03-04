@@ -3,7 +3,8 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
-import numpy as np
+import unittest
+import torch.nn.functional as F
 from textsimilarity import constants as c
 
 class CosineSimilarityRanker():
@@ -36,11 +37,7 @@ class CosineSimilarityRanker():
 
     def _calculate_cosine_similarity(self, emb0, emb1):
         """Calculate and return cosine similarity."""
-        emb0 = emb0.detach().numpy()
-        emb1 = emb1.detach().numpy()
-        numerator = np.dot(emb0, emb1)
-        denominator = np.linalg.norm(emb0)*np.linalg.norm(emb1)
-        return numerator / denominator
+        return F.cosine_similarity(emb0, emb1, dim=0).item()
 
     def rank_on_similarity(self, target_text):
         """
