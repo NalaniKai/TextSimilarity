@@ -3,6 +3,7 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
+import torch
 from transformers import BertTokenizer, BertModel
 
 class BertBaseModel():
@@ -26,6 +27,7 @@ class BertBaseModel():
         self.model = BertModel.from_pretrained(model_name)
         self.tensor_type = tensor_type
 
+    @torch.no_grad()
     def _tokenize(self, text):
         """Returned the tokens for the given text using BERT tokenizer."""
         encoded_dict = self.tokenizer.encode_plus(text, 
@@ -34,6 +36,7 @@ class BertBaseModel():
         padding='max_length')
         return encoded_dict['input_ids']
 
+    @torch.no_grad()
     def _get_embedding(self, text):
         """Return the BERT text embedding for the given text."""
         tokens = self._tokenize(text)

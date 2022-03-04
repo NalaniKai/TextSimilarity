@@ -36,6 +36,8 @@ class CosineSimilarityRanker():
 
     def _calculate_cosine_similarity(self, emb0, emb1):
         """Calculate and return cosine similarity."""
+        emb0 = emb0.detach().numpy()
+        emb1 = emb1.detach().numpy()
         numerator = np.dot(emb0, emb1)
         denominator = np.linalg.norm(emb0)*np.linalg.norm(emb1)
         return numerator / denominator
