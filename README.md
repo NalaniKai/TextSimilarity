@@ -17,4 +17,38 @@ pip install git+https://github.com/NalaniKai/TextSimilarity
 ```
 
 ## Usage
-Please refer to the [examples](https://github.com/NalaniKai/TextSimilarity/tree/main/examples) folder to see how to use this package.
+To use this package for comparing a corpus of text to a target.
+
+First, import the required modules.
+```
+from textsimilarity import text_models, rankers
+```
+
+Second, create a model and ranker instance passing in your list of text.
+```
+#load a text model to use for generating text embeddings
+bert_model = text_models.BertBaseModel()    
+
+#specify corpus
+comparison_corpus = ['relaxing vacation',
+    'dancing and chocolate',
+    'wedding party',
+    'walking in the rain',
+    'soccer game',
+    'skate park']
+
+#specify which model and corpus to use for comparison
+cosine_sim_ranker = rankers.CosineSimilarityRanker(
+                    bert_model, 
+                    comparison_corpus
+                    )
+```
+
+Third, rank the corpus based on another text.
+```
+#rank corpus based on target text
+target = 'girls night out'
+ranked_text = cosine_sim_ranker.rank_on_similarity(target)
+```
+
+Please refer to the [examples](https://github.com/NalaniKai/TextSimilarity/tree/main/examples) folder for more examples on how to use this package.

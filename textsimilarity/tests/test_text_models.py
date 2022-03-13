@@ -3,9 +3,10 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
-import unittest 
+import unittest
 from textsimilarity import text_models
 from textsimilarity import constants as c
+
 
 class TestBertModel(unittest.TestCase):
     """
@@ -22,8 +23,8 @@ class TestBertModel(unittest.TestCase):
     def tearDown(self):
         """Reset setup"""
         self.bert_model = None
-        self.test_park_walk = None 
-        self.test_out_walk = None 
+        self.test_park_walk = None
+        self.test_out_walk = None
 
     def test__tokenize_not_equal(self):
         """Different words should have different tokens."""

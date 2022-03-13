@@ -14,7 +14,12 @@ branches:
 #set up environment
 install:
   - pip install coverage
+  - pip install flake8
   - pip install -r requirements.txt
+
+#run commands before main script
+before_script:
+  - "flake8 textsimilarity"
 
 #run unittests
 script:

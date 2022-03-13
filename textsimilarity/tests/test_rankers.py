@@ -3,15 +3,16 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
-import unittest 
+import unittest
 from textsimilarity import rankers
 from textsimilarity import text_models
 from textsimilarity import constants as c
 
+
 class TestRankers(unittest.TestCase):
     """
-    Test methods for CosineSimilarityRanker for 
-    getting text embeddings, calculating the cosine 
+    Test methods for CosineSimilarityRanker for
+    getting text embeddings, calculating the cosine
     similarity, and ranking text based on similarity.
     """
 
@@ -20,17 +21,21 @@ class TestRankers(unittest.TestCase):
         Define test instances and text examples.
         """
         self.bert_model = text_models.BertBaseModel()
-        self.comparison_corpus = ['happy birthday', 'party invitations', 
-                'special menu', 'wedding party']
+        self.comparison_corpus = [
+                                'happy birthday',
+                                'party invitations',
+                                'special menu',
+                                'wedding party'
+                                ]
         self.cosine_sim_ranker = rankers.CosineSimilarityRanker(
-                                        self.bert_model, 
+                                        self.bert_model,
                                         self.comparison_corpus
                                         )
 
     def tearDown(self):
         """Reset setup"""
         self.bert_model = None
-        self.comparison_corpus = None 
+        self.comparison_corpus = None
         self.cosine_sim_ranker = None
 
     def test__get_embeddings_dict_text_compare(self):
@@ -50,12 +55,12 @@ class TestRankers(unittest.TestCase):
         emb_dict = self.cosine_sim_ranker._get_embeddings_dict(
                                         self.comparison_corpus)
         embs = list(emb_dict.values())
-        self.assertEqual((len(embs), len(embs[c.FIRST_IDX])), 
-            (len(self.comparison_corpus), c.EMB_SIZE))
+        self.assertEqual((len(embs), len(embs[c.FIRST_IDX])),
+                         (len(self.comparison_corpus), c.EMB_SIZE))
 
     def test__calculate_cosine_similarity_close(self):
         """
-        Similar text should have cosine similarity values 
+        Similar text should have cosine similarity values
         close to but below 1.
         """
         emb_happy_birthday = self.cosine_sim_ranker.comparison_dict.get(
@@ -80,20 +85,20 @@ class TestRankers(unittest.TestCase):
         target = 'birthday presents'
         ranked = self.cosine_sim_ranker.rank_on_similarity(target)
 
-        #closest is "happy birthday"
+        # closest is "happy birthday"
         self.assertEqual(
-            ranked[c.FIRST_IDX][c.FIRST_IDX], 
+            ranked[c.FIRST_IDX][c.FIRST_IDX],
             self.comparison_corpus[c.FIRST_IDX]
             )
 
-        #farthest is "wedding party"
+        # farthest is "wedding party"
         self.assertEqual(
-            ranked[-1][c.FIRST_IDX], 
+            ranked[-1][c.FIRST_IDX],
             self.comparison_corpus[-1]
             )
 
-        #cosine similarity should be greater for more similar text
+        # cosine similarity should be greater for more similar text
         self.assertGreater(
-            ranked[c.FIRST_IDX][c.SECOND_IDX], 
+            ranked[c.FIRST_IDX][c.SECOND_IDX],
             ranked[-1][c.SECOND_IDX]
             )

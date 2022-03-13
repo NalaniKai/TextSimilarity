@@ -3,9 +3,9 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
-import unittest
 import torch.nn.functional as F
 from textsimilarity import constants as c
+
 
 class CosineSimilarityRanker():
     """
@@ -19,7 +19,7 @@ class CosineSimilarityRanker():
         comparison_corpus: list of strings for ranking
 
         Create dictionary of text phrases for comparison with
-        the corresponding embeddings using the given model. 
+        the corresponding embeddings using the given model.
         """
         self.model = model
         self.comparison_dict = self._get_embeddings_dict(comparison_corpus)
@@ -31,7 +31,7 @@ class CosineSimilarityRanker():
         """
         temp_comparison_dict = dict()
         for text in comparison_corpus:
-            embedding = self.model._get_embedding(text)        
+            embedding = self.model._get_embedding(text)
             temp_comparison_dict.update({text: embedding})
         return temp_comparison_dict
 
@@ -41,7 +41,7 @@ class CosineSimilarityRanker():
 
     def rank_on_similarity(self, target_text):
         """
-        Returns ordered text phrases based on cosine similarity to 
+        Returns ordered text phrases based on cosine similarity to
         a given target text string.
         """
         target_emb = self.model._get_embedding(target_text)
@@ -49,5 +49,9 @@ class CosineSimilarityRanker():
         for text, emb in self.comparison_dict.items():
             cosine_sim = self._calculate_cosine_similarity(target_emb, emb)
             cosine_sim_tracker.append((text, cosine_sim))
-        ranked_similarity = sorted(cosine_sim_tracker, key=lambda pair: pair[c.SECOND_IDX], reverse=True)
+        ranked_similarity = sorted(
+                                    cosine_sim_tracker,
+                                    key=lambda pair: pair[c.SECOND_IDX],
+                                    reverse=True
+                                )
         return ranked_similarity

@@ -12,9 +12,10 @@ import spacy.cli
 from profanity_filter import ProfanityFilter
 from textsimilarity import constants as c
 
+
 class CleanText():
     """
-    Cleans text by checking for profanity and 
+    Cleans text by checking for profanity and
     correcting spelling errors.
     """
 
@@ -30,7 +31,6 @@ class CleanText():
         self.spacy_english = spacy.load('en_core_web_lg', quiet=True)
         pf = ProfanityFilter(nlps={'en': self.spacy_english})
         self.spacy_english.add_pipe(pf.spacy_component, last=True)
-
 
     def determine_text_profanity(self, text):
         """Determine whether text string contains profanity"""
@@ -53,7 +53,7 @@ class CleanText():
                     self._calculate_jaccard_distance(word, w),
                     w
                 )
-                for w in self.english_words 
+                for w in self.english_words
                 if word[c.FIRST_IDX] == w[c.FIRST_IDX]
             ]
             correction = sorted(temp, key=lambda v: v[c.FIRST_IDX])

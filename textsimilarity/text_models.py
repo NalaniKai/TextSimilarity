@@ -6,6 +6,7 @@ Released Under MIT License
 import torch
 from transformers import BertTokenizer, BertModel
 
+
 class BertBaseModel():
     """
     Loads a BERT model from the transformers library and provides
@@ -13,9 +14,9 @@ class BertBaseModel():
     """
 
     def __init__(
-                self, 
-                max_len=45, 
-                model_name='bert-base-uncased', 
+                self,
+                max_len=45,
+                model_name='bert-base-uncased',
                 tensor_type='pt'
                 ):
         """
@@ -23,17 +24,19 @@ class BertBaseModel():
         from the transformers library.
         """
         self.max_len = max_len
-        self.tokenizer = BertTokenizer.from_pretrained(model_name) 
+        self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.model = BertModel.from_pretrained(model_name)
         self.tensor_type = tensor_type
 
     @torch.no_grad()
     def _tokenize(self, text):
         """Returned the tokens for the given text using BERT tokenizer."""
-        encoded_dict = self.tokenizer.encode_plus(text, 
-        return_tensors=self.tensor_type,
-        max_length=self.max_len,
-        padding='max_length')
+        encoded_dict = self.tokenizer.encode_plus(
+                                text,
+                                return_tensors=self.tensor_type,
+                                max_length=self.max_len,
+                                padding='max_length'
+                            )
         return encoded_dict['input_ids']
 
     @torch.no_grad()

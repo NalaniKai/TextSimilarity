@@ -3,13 +3,13 @@ Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
 
-import unittest 
+import unittest
 from textsimilarity import clean_text
-from textsimilarity import constants as c
+
 
 class TestCleanText(unittest.TestCase):
     """
-    Test methods in CleanText for 
+    Test methods in CleanText for
     spelling correction, profanity checking,
     and calculating the Jaccard distance.
     """
@@ -33,15 +33,15 @@ class TestCleanText(unittest.TestCase):
         self.correct_forest = None
         self.incorrect_forest = None
 
-    def test__calculate_jaccard_distance_difference(self): 
-        """Jaccard distance should be greater for less similar words"""       
+    def test__calculate_jaccard_distance_difference(self):
+        """Jaccard distance should be greater for less similar words"""
         jaccard_dist_less = self.text_cleaner._calculate_jaccard_distance(
                             self.incorrect_birthday, self.correct_birthday)
         jaccard_dist_more = self.text_cleaner._calculate_jaccard_distance(
                             self.correct_forest, self.correct_birthday)
         self.assertGreater(jaccard_dist_more, jaccard_dist_less)
 
-    def test__calculate_jaccard_distance_match(self):   
+    def test__calculate_jaccard_distance_match(self):
         """Jaccard distance should be 0.0 for the same word."""
         jaccard_dist_match = self.text_cleaner._calculate_jaccard_distance(
                             self.correct_birthday, self.correct_birthday)
@@ -52,13 +52,14 @@ class TestCleanText(unittest.TestCase):
         Spelling corrections should be made for text
         with multiple misspelled words.
         """
-        misspelled_words = self.incorrect_birthday + \
-                            ' ' + \
-                            self.incorrect_forest
+        misspelled_words = self.incorrect_birthday + ' ' + \
+            self.incorrect_forest
         corrected_words = self.text_cleaner.spelling_correction(
                             misspelled_words)
-        self.assertEqual(corrected_words, 
-            self.correct_birthday + ' ' + self.correct_forest)
+        self.assertEqual(
+                        corrected_words,
+                        self.correct_birthday + ' ' + self.correct_forest
+                        )
 
     def test_spelling_correction_none(self):
         """
@@ -69,10 +70,10 @@ class TestCleanText(unittest.TestCase):
         corrected_words = self.text_cleaner.spelling_correction(
                                             correct_words)
         self.assertEqual(corrected_words, correct_words)
-    
+
     def test_determine_text_profanity_false(self):
         """
-        Text that does not contain profanity should 
+        Text that does not contain profanity should
         not be marked as profane.
         """
         is_profanity = self.text_cleaner.determine_text_profanity(
