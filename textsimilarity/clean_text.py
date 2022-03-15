@@ -1,4 +1,7 @@
 """
+This module contains functionality for cleaning
+and pre-processing natural language data.
+
 Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
@@ -33,7 +36,11 @@ class CleanText():
         self.spacy_english.add_pipe(pf.spacy_component, last=True)
 
     def determine_text_profanity(self, text):
-        """Determine whether text string contains profanity"""
+        """
+        text: string to check for profanity
+
+        Return whether text string contains profanity.
+        """
         text = self.spacy_english(text)
         is_profanity = text._.is_profane
         if is_profanity:
@@ -42,6 +49,8 @@ class CleanText():
 
     def spelling_correction(self, text):
         """
+        text: string to correct spelling for
+
         Correct spelling of words in given phrase.
         Return the text string with corrections for misspelled words.
         """
@@ -62,7 +71,11 @@ class CleanText():
         return ' '.join(corrected)
 
     def _calculate_jaccard_distance(self, w0, w1):
-        """Calculate and return the Jacard distance between words."""
+        """
+        w0, w1: words to compare
+
+        Calculate and return the Jacard distance between words.
+        """
         w0_ngrams = set(ngrams(w0, self.ngram_chars))
         w1_ngrams = set(ngrams(w1, self.ngram_chars))
         return jaccard_distance(w0_ngrams, w1_ngrams)

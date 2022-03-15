@@ -1,4 +1,7 @@
 """
+This module contains classes for rankers which
+take in a model to use and corpus to compare.
+
 Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
@@ -26,6 +29,8 @@ class CosineSimilarityRanker():
 
     def _get_embeddings_dict(self, comparison_corpus):
         """
+        comparison_corpus: list of strings for ranking
+
         Return a dictionary mapping original text
         phrases to their respective embeddings.
         """
@@ -36,11 +41,17 @@ class CosineSimilarityRanker():
         return temp_comparison_dict
 
     def _calculate_cosine_similarity(self, emb0, emb1):
-        """Calculate and return cosine similarity."""
+        """
+        emb0, emb1: vector embeddings from the model
+
+        Calculate and return cosine similarity.
+        """
         return F.cosine_similarity(emb0, emb1, dim=0).item()
 
     def rank_on_similarity(self, target_text):
         """
+        target_text: text string to rank the corpus on
+
         Returns ordered text phrases based on cosine similarity to
         a given target text string.
         """

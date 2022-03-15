@@ -1,4 +1,7 @@
 """
+This module contains classes to load natural language models
+and provide methods to tokenize data and get embeddings.
+
 Copyright (c) 2022 NalaniKai
 Released Under MIT License
 """
@@ -20,6 +23,10 @@ class BertBaseModel():
                 tensor_type='pt'
                 ):
         """
+        max_len: maximum number of tokens to allow
+        model_name: BERT based model to load
+        tensor_type: specify to use PyTorch or TensorFlow
+
         Load a pre-trained BERT model and matching tokenizer
         from the transformers library.
         """
@@ -30,7 +37,11 @@ class BertBaseModel():
 
     @torch.no_grad()
     def _tokenize(self, text):
-        """Returned the tokens for the given text using BERT tokenizer."""
+        """
+        text: string to tokenize
+
+        Return tokens for the given text string using BERT tokenizer.
+        """
         encoded_dict = self.tokenizer.encode_plus(
                                 text,
                                 return_tensors=self.tensor_type,
@@ -41,7 +52,11 @@ class BertBaseModel():
 
     @torch.no_grad()
     def _get_embedding(self, text):
-        """Return the BERT text embedding for the given text."""
+        """
+        text: string to get vector embedding for
+
+        Return the BERT text embedding for the given text string.
+        """
         tokens = self._tokenize(text)
         output = self.model(tokens, return_dict=True)
         return output.last_hidden_state.reshape(-1,)
